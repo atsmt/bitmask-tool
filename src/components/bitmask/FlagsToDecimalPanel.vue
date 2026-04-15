@@ -29,7 +29,22 @@ const selectedNames = computed({
       <h2 class="text-base font-semibold text-slate-900">Flags => decimal/binary</h2>
     </header>
 
-    <div v-if="defineFlagsProps.statuses.length > 0" class="max-h-56 space-y-1.5 overflow-y-auto pr-1">
+    <div
+      class="mb-3 grid grid-cols-2 gap-2 rounded-xl border border-sky-200 bg-sky-50 px-3 py-2.5 text-sky-900"
+      role="status"
+      aria-live="polite"
+    >
+      <div>
+        <p class="text-[11px] font-medium uppercase tracking-wide text-sky-600">Decimal</p>
+        <p class="mt-0.5 font-mono text-lg font-semibold">{{ defineFlagsProps.calculatedDecimal }}</p>
+      </div>
+      <div>
+        <p class="text-[11px] font-medium uppercase tracking-wide text-sky-600">Binary</p>
+        <p class="mt-0.5 truncate font-mono text-lg font-semibold">{{ defineFlagsProps.calculatedBinary }}</p>
+      </div>
+    </div>
+
+    <div v-if="defineFlagsProps.statuses.length > 0" class="space-y-1.5">
       <label
         v-for="status in defineFlagsProps.statuses"
         :key="status.name"
@@ -50,20 +65,5 @@ const selectedNames = computed({
     <p v-else class="text-xs text-slate-500">
       Parse a valid dictionary to enable checkbox selection.
     </p>
-
-    <div
-      class="mt-3 grid grid-cols-2 gap-2 rounded-xl border border-sky-200 bg-sky-50 px-3 py-2.5 text-sky-900"
-      role="status"
-      aria-live="polite"
-    >
-      <div>
-        <p class="text-[11px] font-medium uppercase tracking-wide text-sky-600">Decimal</p>
-        <p class="mt-0.5 font-mono text-lg font-semibold">{{ defineFlagsProps.calculatedDecimal }}</p>
-      </div>
-      <div>
-        <p class="text-[11px] font-medium uppercase tracking-wide text-sky-600">Binary</p>
-        <p class="mt-0.5 truncate font-mono text-lg font-semibold">{{ defineFlagsProps.calculatedBinary }}</p>
-      </div>
-    </div>
   </section>
 </template>

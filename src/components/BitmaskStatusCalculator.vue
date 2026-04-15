@@ -41,7 +41,10 @@ const flagsToDecimalResult = computed(() =>
   calculateFlagsDecimal(statuses.value, selectedFlagNames.value)
 );
 
-const flagsToBinaryResult = computed(() => `0b${flagsToDecimalResult.value.toString(2)}`);
+const flagsToBinaryResult = computed(() => {
+  const decimalValue = Math.max(0, flagsToDecimalResult.value);
+  return decimalValue.toString(2);
+});
 </script>
 
 <template>
@@ -55,27 +58,25 @@ const flagsToBinaryResult = computed(() => `0b${flagsToDecimalResult.value.toStr
           Bitmask Status Calculator
         </h1>
         <p class="mt-2 max-w-3xl text-sm text-slate-600">
-          Quickly convert decimal or binary bitmasks to status flags and reverse.
+          Quickly convert decimal/binary bitmasks to status flags and reverse.
         </p>
       </header>
 
-      <div class="grid gap-4 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,1fr)]">
+      <div class="grid items-start gap-4 lg:grid-cols-[minmax(0,1.15fr)_minmax(0,1fr)_minmax(0,1fr)]">
         <DictionaryInputPanel
           v-model="rawDictionaryText"
           :parse-error="parseError"
           :parsed-count="statuses.length"
         />
 
-        <div class="grid gap-4">
-          <DecimalToFlagsPanel v-model="decimalInput" :statuses="statuses" />
+        <DecimalToFlagsPanel v-model="decimalInput" :statuses="statuses" />
 
-          <FlagsToDecimalPanel
-            v-model="selectedFlagNames"
-            :statuses="statuses"
-            :calculated-decimal="flagsToDecimalResult"
-            :calculated-binary="flagsToBinaryResult"
-          />
-        </div>
+        <FlagsToDecimalPanel
+          v-model="selectedFlagNames"
+          :statuses="statuses"
+          :calculated-decimal="flagsToDecimalResult"
+          :calculated-binary="flagsToBinaryResult"
+        />
       </div>
     </main>
   </div>

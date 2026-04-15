@@ -78,7 +78,7 @@ function flagIsActive(flagValue: number): boolean {
 
       <ul
         v-if="defineDecimalProps.statuses.length > 0"
-        class="mt-2 max-h-56 space-y-1.5 overflow-y-auto pr-1"
+        class="mt-2 space-y-1.5"
       >
         <li
           v-for="status in defineDecimalProps.statuses"
