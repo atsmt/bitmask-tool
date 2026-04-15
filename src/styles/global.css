@@ -1,0 +1,15 @@
+@import "tailwindcss";
+
+:root {
+	color-scheme: light;
+	font-family:
+		"JetBrains Mono",
+		"IBM Plex Sans",
+		"Cascadia Code",
+		"Segoe UI",
+		sans-serif;
+}
+
+body {
+	margin: 0;
+}

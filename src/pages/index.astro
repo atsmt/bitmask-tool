@@ -1,0 +1,22 @@
+---
+import "../styles/global.css";
+import BitmaskStatusCalculator from "../components/BitmaskStatusCalculator.vue";
+---
+
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<link rel="icon" href="/favicon.ico" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<meta name="generator" content={Astro.generator} />
+		<meta
+			name="description"
+			content="Quickly convert decimal bitmasks to status flags and vice versa."
+		/>
+		<title>Bitmask Status Calculator</title>
+	</head>
+	<body class="min-h-screen bg-slate-50 text-slate-950 antialiased">
+		<BitmaskStatusCalculator client:load />
+	</body>
+</html>
