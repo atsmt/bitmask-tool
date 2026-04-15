@@ -5,20 +5,54 @@ import DecimalToFlagsPanel from "./bitmask/DecimalToFlagsPanel.vue";
 import FlagsToDecimalPanel from "./bitmask/FlagsToDecimalPanel.vue";
 import { calculateFlagsDecimal } from "../lib/bitmask/math";
 import { parseStatusDictionary } from "../lib/bitmask/parser";
+import type { DictionaryProfile } from "../lib/bitmask/types";
 import {
   DEFAULT_DICTIONARY_TEXT,
+  createDictionaryProfile,
+  getDefaultDictionaryName,
   loadDictionaryFromStorage,
-  saveDictionaryToStorage
+  loadDictionaryProfilesFromStorage,
+  saveDictionaryProfilesToStorage
 } from "../lib/bitmask/storage";
 
 const THEME_STORAGE_KEY = "bitmask_theme";
 
 type ThemeMode = "light" | "dark";
 
-const rawDictionaryText = ref(DEFAULT_DICTIONARY_TEXT);
+const dictionaries = ref<DictionaryProfile[]>([]);
+const activeDictionaryId = ref("");
 const decimalInput = ref(0);
 const selectedFlagNames = ref<string[]>([]);
 const themeMode = ref<ThemeMode>("light");
+
+const activeDictionary = computed(
+  () =>
+    dictionaries.value.find((dictionary) => dictionary.id === activeDictionaryId.value) ?? null
+);
+
+const rawDictionaryText = computed({
+  get: () => activeDictionary.value?.text ?? "",
+  set: (nextValue: string) => {
+    if (!activeDictionary.value) {
+      return;
+    }
+
+    dictionaries.value = dictionaries.value.map((dictionary) =>
+      dictionary.id === activeDictionaryId.value
+        ? { ...dictionary, text: nextValue }
+        : dictionary
+    );
+  }
+});
+
+const activeDictionaryName = computed(() => activeDictionary.value?.name ?? "");
+
+const dictionaryOptions = computed(() =>
+  dictionaries.value.map((dictionary) => ({
+    id: dictionary.id,
+    name: dictionary.name
+  }))
+);
 
 function isThemeMode(value: string | null): value is ThemeMode {
   return value === "light" || value === "dark";
@@ -44,11 +78,108 @@ function toggleTheme(): void {
   themeMode.value = themeMode.value === "dark" ? "light" : "dark";
 }
 
-onMounted(() => {
-  const savedDictionary = loadDictionaryFromStorage();
+function resolveActiveDictionaryId(
+  dictionaryList: DictionaryProfile[],
+  dictionaryId: string
+): string {
+  if (dictionaryList.some((dictionary) => dictionary.id === dictionaryId)) {
+    return dictionaryId;
+  }
 
-  if (savedDictionary?.trim()) {
-    rawDictionaryText.value = savedDictionary;
+  return dictionaryList[0]?.id ?? "";
+}
+
+function getNextDictionaryName(): string {
+  const existingNames = new Set(
+    dictionaries.value.map((dictionary) => dictionary.name.toLowerCase())
+  );
+
+  let nextIndex = dictionaries.value.length + 1;
+
+  while (true) {
+    const candidateName = `Dictionary ${nextIndex}`;
+
+    if (!existingNames.has(candidateName.toLowerCase())) {
+      return candidateName;
+    }
+
+    nextIndex += 1;
+  }
+}
+
+function selectDictionary(nextDictionaryId: string): void {
+  if (!dictionaries.value.some((dictionary) => dictionary.id === nextDictionaryId)) {
+    return;
+  }
+
+  activeDictionaryId.value = nextDictionaryId;
+}
+
+function addDictionary(): void {
+  const nextDictionary = createDictionaryProfile(getNextDictionaryName(), "");
+  dictionaries.value = [...dictionaries.value, nextDictionary];
+  activeDictionaryId.value = nextDictionary.id;
+  decimalInput.value = 0;
+  selectedFlagNames.value = [];
+}
+
+function renameActiveDictionary(nextName: string): void {
+  if (!activeDictionary.value) {
+    return;
+  }
+
+  const normalizedName = nextName.trim() || "Untitled dictionary";
+
+  dictionaries.value = dictionaries.value.map((dictionary) =>
+    dictionary.id === activeDictionaryId.value
+      ? { ...dictionary, name: normalizedName }
+      : dictionary
+  );
+}
+
+function deleteActiveDictionary(): void {
+  if (!activeDictionary.value || dictionaries.value.length <= 1) {
+    return;
+  }
+
+  if (typeof window !== "undefined") {
+    const shouldDelete = window.confirm(
+      `Delete dictionary "${activeDictionary.value.name}"?`
+    );
+
+    if (!shouldDelete) {
+      return;
+    }
+  }
+
+  const nextDictionaries = dictionaries.value.filter(
+    (dictionary) => dictionary.id !== activeDictionary.value?.id
+  );
+
+  dictionaries.value = nextDictionaries;
+  activeDictionaryId.value = nextDictionaries[0]?.id ?? "";
+  decimalInput.value = 0;
+  selectedFlagNames.value = [];
+}
+
+onMounted(() => {
+  const storedDictionaries = loadDictionaryProfilesFromStorage();
+
+  if (storedDictionaries.dictionaries.length > 0) {
+    dictionaries.value = storedDictionaries.dictionaries;
+    activeDictionaryId.value =
+      storedDictionaries.activeDictionaryId ?? storedDictionaries.dictionaries[0].id;
+  } else {
+    const savedDictionary = loadDictionaryFromStorage();
+    const initialDictionaryText =
+      savedDictionary?.trim() || DEFAULT_DICTIONARY_TEXT;
+    const defaultDictionary = createDictionaryProfile(
+      getDefaultDictionaryName(),
+      initialDictionaryText
+    );
+
+    dictionaries.value = [defaultDictionary];
+    activeDictionaryId.value = defaultDictionary.id;
   }
 
   let nextTheme = getSystemTheme();
@@ -69,9 +200,27 @@ onMounted(() => {
   syncThemeClass(nextTheme);
 });
 
-watch(rawDictionaryText, (nextValue) => {
-  saveDictionaryToStorage(nextValue);
-});
+watch(
+  [dictionaries, activeDictionaryId],
+  ([nextDictionaries, nextActiveId]) => {
+    if (nextDictionaries.length === 0) {
+      return;
+    }
+
+    const resolvedActiveId = resolveActiveDictionaryId(
+      nextDictionaries,
+      nextActiveId
+    );
+
+    if (resolvedActiveId !== nextActiveId) {
+      activeDictionaryId.value = resolvedActiveId;
+      return;
+    }
+
+    saveDictionaryProfilesToStorage(nextDictionaries, resolvedActiveId);
+  },
+  { deep: true }
+);
 
 watch(themeMode, (nextTheme) => {
   syncThemeClass(nextTheme);
@@ -165,6 +314,14 @@ const isDarkMode = computed(() => themeMode.value === "dark");
           v-model="rawDictionaryText"
           :parse-error="parseError"
           :parsed-count="statuses.length"
+          :dictionary-options="dictionaryOptions"
+          :active-dictionary-id="activeDictionaryId"
+          :active-dictionary-name="activeDictionaryName"
+          :can-delete-dictionary="dictionaries.length > 1"
+          @select-dictionary="selectDictionary"
+          @add-dictionary="addDictionary"
+          @rename-dictionary="renameActiveDictionary"
+          @delete-dictionary="deleteActiveDictionary"
         />
 
         <DecimalToFlagsPanel v-model="decimalInput" :statuses="statuses" />
