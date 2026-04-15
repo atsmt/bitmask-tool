@@ -52,7 +52,7 @@ const flagsToBinaryResult = computed(() => {
     <main class="mx-auto max-w-6xl px-4 py-6 sm:px-6 lg:px-8">
       <header class="mb-5">
         <p class="text-xs font-semibold uppercase tracking-[0.26em] text-sky-600">
-          Developer Utility
+          For Developers
         </p>
         <h1 class="mt-1.5 text-2xl font-semibold tracking-tight text-slate-900 sm:text-3xl">
           Bitmask Status Calculator

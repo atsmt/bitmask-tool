@@ -38,7 +38,7 @@ function onInput(event: Event): void {
       id="dictionary-input"
       :value="defineDictionaryProps.modelValue"
       class="h-44 w-full resize-y rounded-xl border border-slate-300 bg-white px-2.5 py-2 font-mono text-xs text-slate-900 shadow-inner outline-none transition focus:border-sky-400 focus:ring-2 focus:ring-sky-100"
-      placeholder="const ReceiptStatus = { FileReceived: 1, DataReceived: 2 }"
+      placeholder="const ReceiptStatus = { OrderInCart: 1, OrderInitiated: 2 }"
       spellcheck="false"
       @input="onInput"
     />

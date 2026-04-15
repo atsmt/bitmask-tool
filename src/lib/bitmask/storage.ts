@@ -1,10 +1,10 @@
 export const BITMASK_DICT_STORAGE_KEY = "bitmask_dict";
 
 export const DEFAULT_DICTIONARY_TEXT = `const ReceiptStatus = {
-  FileReceived: 1,
-  DataReceived: 2,
-  ThumbCreated: 4,
-  OcrDone: 8
+  OrderInCart: 1,
+  PaymentStarted: 2,
+  PaymentFinished: 4,
+  OrderDelivered: 8
 };`;
 
 export function loadDictionaryFromStorage(): string | null {
