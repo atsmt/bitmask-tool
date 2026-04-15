@@ -1,43 +1,123 @@
-# Astro Starter Kit: Minimal
+# Bitmask Status Calculator
+
+A single-page developer utility for two-way bitmask conversions.
+
+Built with Astro + Vue 3 + Tailwind CSS and deployed as static output (SSG).
+
+## Features
+
+- Parse status dictionaries from JSON or JS object-like input (no eval)
+- Convert decimal or binary input to active flags
+- Convert selected flags to decimal and binary output
+- Persistent dictionary input via localStorage
+- Light and dark mode toggle with persisted preference
+- Responsive layout with compact, developer-focused UI
+
+## Stack
+
+- Astro
+- Vue 3 (`script setup` + TypeScript)
+- Tailwind CSS
+- Bun
+
+## Getting Started
+
+1. Install dependencies:
 
 ```sh
-bun create astro@latest -- --template minimal
+bun install
 ```
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+2. Start development server:
 
-## 🚀 Project Structure
+```sh
+bun run dev
+```
 
-Inside of your Astro project, you'll see the following folders and files:
+3. Build production output:
+
+```sh
+bun run build
+```
+
+4. Preview production build locally:
+
+```sh
+bun run preview
+```
+
+## Dictionary Input Format
+
+You can paste either:
+
+- JSON:
+
+```json
+{
+	"FileReceived": 1,
+	"DataReceived": 2,
+	"ThumbCreated": 4,
+	"OcrDone": 8
+}
+```
+
+- JS object style:
+
+```js
+const ReceiptStatus = {
+	FileReceived: 1,
+	DataReceived: 2,
+	ThumbCreated: 4,
+	OcrDone: 8
+};
+```
+
+## Bitmask Input Rules (Mode 1)
+
+Supported input examples:
+
+- Decimal: `10`
+- Binary with prefix: `0b1010`
+- Binary without prefix: `1010`
+
+## Deployment (Cloudflare Pages)
+
+### Git-connected deploy (recommended)
+
+Configure in Cloudflare Pages:
+
+- Build command: `bun run build`
+- Build output directory: `dist`
+
+### CLI deploy (Wrangler)
+
+```sh
+bun add -d wrangler
+bunx wrangler login
+bunx wrangler pages project create bitmask-tool
+bunx wrangler pages deploy dist --project-name bitmask-tool
+```
+
+## Project Structure
 
 ```text
-/
-├── public/
-├── src/
-│   └── pages/
-│       └── index.astro
-└── package.json
+src/
+	components/
+		BitmaskStatusCalculator.vue
+		bitmask/
+			DictionaryInputPanel.vue
+			DecimalToFlagsPanel.vue
+			FlagsToDecimalPanel.vue
+	lib/
+		bitmask/
+			math.ts
+			parser.ts
+			storage.ts
+			types.ts
+	pages/
+		index.astro
+	styles/
+		global.css
+public/
+	robots.txt
 ```
-
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
-
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
-
-Any static assets, like images, can be placed in the `public/` directory.
-
-## 🧞 Commands
-
-All commands are run from the root of the project, from a terminal:
-
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `bun install`             | Installs dependencies                            |
-| `bun dev`             | Starts local dev server at `localhost:4321`      |
-| `bun build`           | Build your production site to `./dist/`          |
-| `bun preview`         | Preview your build locally, before deploying     |
-| `bun astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `bun astro -- --help` | Get help using the Astro CLI                     |
-
-## 👀 Want to learn more?
-
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).

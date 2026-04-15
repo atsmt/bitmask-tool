@@ -1,0 +1,44 @@
+# Bitmask Status Calculator
+
+Bitmask Status Calculator is a single-page developer utility that converts:
+- Decimal/binary bitmasks -> active status flags
+- Selected status flags -> decimal and binary values
+
+## Purpose
+
+Help developers quickly inspect and compose bitmask flag values from a pasted status dictionary.
+
+## Input Support
+
+- JSON object dictionaries
+- JavaScript object-like dictionaries (parsed safely, no eval)
+- Decimal bitmask input
+- Binary bitmask input (e.g. 1010 or 0b1010)
+
+## Core Behavior
+
+1. Dictionary parsing to key/value status flags
+2. Decimal/binary to flags using bitwise AND
+3. Flags to decimal/binary using bitwise OR
+4. Local persistence of dictionary input
+5. Light and dark mode with persisted preference
+
+## Tech Stack
+
+- Astro
+- Vue 3 + TypeScript
+- Tailwind CSS
+- Bun
+
+## Key Files
+
+- src/components/BitmaskStatusCalculator.vue
+- src/components/bitmask/DictionaryInputPanel.vue
+- src/components/bitmask/DecimalToFlagsPanel.vue
+- src/components/bitmask/FlagsToDecimalPanel.vue
+- src/lib/bitmask/parser.ts
+- src/lib/bitmask/math.ts
+
+## Deployment
+
+Static output deployed to Cloudflare Pages.
