@@ -43,13 +43,13 @@ function flagIsActive(flagValue: number): boolean {
 
 <template>
   <section
-    class="rounded-2xl border border-slate-200 bg-white/90 p-4 shadow-sm ring-1 ring-slate-900/5 backdrop-blur"
+    class="rounded-2xl border border-slate-200 bg-white/90 p-4 shadow-sm ring-1 ring-slate-900/5 backdrop-blur dark:border-slate-700 dark:bg-slate-900/80 dark:ring-slate-100/10"
   >
     <header class="mb-3">
-      <h2 class="text-base font-semibold text-slate-900">Decimal/binary => flags</h2>
+      <h2 class="text-base font-semibold text-slate-900 dark:text-slate-100">Decimal/binary => flags</h2>
     </header>
 
-    <label for="decimal-input" class="mb-1.5 block text-xs font-medium text-slate-700">
+    <label for="decimal-input" class="mb-1.5 block text-xs font-medium text-slate-700 dark:text-slate-300">
       Enter decimal or binary number
     </label>
     <input
@@ -57,7 +57,7 @@ function flagIsActive(flagValue: number): boolean {
       type="text"
       inputmode="numeric"
       :value="rawBitmaskInput"
-      class="w-full rounded-xl border border-slate-300 bg-white px-2.5 py-1.5 font-mono text-sm text-slate-900 outline-none transition focus:border-sky-400 focus:ring-2 focus:ring-sky-100"
+      class="w-full rounded-xl border border-slate-300 bg-white px-2.5 py-1.5 font-mono text-sm text-slate-900 outline-none transition focus:border-sky-400 focus:ring-2 focus:ring-sky-100 dark:border-slate-600 dark:bg-slate-950 dark:text-slate-100 dark:focus:border-sky-500 dark:focus:ring-sky-900/50"
       placeholder="10, 0b1010, or 1010"
       @input="onInput"
     />
@@ -71,8 +71,8 @@ function flagIsActive(flagValue: number): boolean {
       Enter a valid decimal integer or binary value like 1010 or 0b1010.
     </p>
 
-    <div class="mt-3 rounded-xl bg-slate-50 p-3">
-      <p class="text-xs font-medium uppercase tracking-wide text-slate-500">
+    <div class="mt-3 rounded-xl bg-slate-50 p-3 dark:bg-slate-950/70">
+      <p class="text-xs font-medium uppercase tracking-wide text-slate-500 dark:text-slate-400">
         Active statuses for decimal {{ normalizedDecimal }}
       </p>
 
@@ -86,8 +86,8 @@ function flagIsActive(flagValue: number): boolean {
           class="flex items-center justify-between rounded-lg border px-2.5 py-1.5 text-xs"
           :class="
             flagIsActive(status.value)
-              ? 'border-emerald-300 bg-emerald-50 text-emerald-800'
-              : 'border-slate-200 bg-white text-slate-600'
+              ? 'border-emerald-300 bg-emerald-50 text-emerald-800 dark:border-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-200'
+              : 'border-slate-200 bg-white text-slate-600 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-300'
           "
         >
           <span class="font-medium">{{ status.name }}</span>

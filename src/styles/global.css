@@ -1,5 +1,7 @@
 @import "tailwindcss";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
 :root {
 	color-scheme: light;
 	font-family:
@@ -8,6 +10,10 @@
 		"Cascadia Code",
 		"Segoe UI",
 		sans-serif;
+}
+
+:root.dark {
+	color-scheme: dark;
 }
 
 body {

@@ -23,23 +23,23 @@ const selectedNames = computed({
 
 <template>
   <section
-    class="rounded-2xl border border-slate-200 bg-white/90 p-4 shadow-sm ring-1 ring-slate-900/5 backdrop-blur"
+    class="rounded-2xl border border-slate-200 bg-white/90 p-4 shadow-sm ring-1 ring-slate-900/5 backdrop-blur dark:border-slate-700 dark:bg-slate-900/80 dark:ring-slate-100/10"
   >
     <header class="mb-3">
-      <h2 class="text-base font-semibold text-slate-900">Flags => decimal/binary</h2>
+      <h2 class="text-base font-semibold text-slate-900 dark:text-slate-100">Flags => decimal/binary</h2>
     </header>
 
     <div
-      class="mb-3 grid grid-cols-2 gap-2 rounded-xl border border-sky-200 bg-sky-50 px-3 py-2.5 text-sky-900"
+      class="mb-3 grid grid-cols-2 gap-2 rounded-xl border border-sky-200 bg-sky-50 px-3 py-2.5 text-sky-900 dark:border-sky-800 dark:bg-sky-950/50 dark:text-sky-100"
       role="status"
       aria-live="polite"
     >
       <div>
-        <p class="text-[11px] font-medium uppercase tracking-wide text-sky-600">Decimal</p>
+        <p class="text-[11px] font-medium uppercase tracking-wide text-sky-600 dark:text-sky-300">Decimal</p>
         <p class="mt-0.5 font-mono text-lg font-semibold">{{ defineFlagsProps.calculatedDecimal }}</p>
       </div>
       <div>
-        <p class="text-[11px] font-medium uppercase tracking-wide text-sky-600">Binary</p>
+        <p class="text-[11px] font-medium uppercase tracking-wide text-sky-600 dark:text-sky-300">Binary</p>
         <p class="mt-0.5 truncate font-mono text-lg font-semibold">{{ defineFlagsProps.calculatedBinary }}</p>
       </div>
     </div>
@@ -48,7 +48,7 @@ const selectedNames = computed({
       <label
         v-for="status in defineFlagsProps.statuses"
         :key="status.name"
-        class="flex cursor-pointer items-center justify-between rounded-lg border border-slate-200 bg-slate-50 px-2.5 py-1.5 text-xs transition hover:border-sky-300 hover:bg-sky-50"
+        class="flex cursor-pointer items-center justify-between rounded-lg border border-slate-200 bg-slate-50 px-2.5 py-1.5 text-xs transition hover:border-sky-300 hover:bg-sky-50 dark:border-slate-700 dark:bg-slate-900 dark:hover:border-sky-600 dark:hover:bg-slate-800"
       >
         <div class="flex items-center gap-2">
           <input
@@ -57,12 +57,12 @@ const selectedNames = computed({
             :value="status.name"
             class="h-4 w-4 rounded border-slate-400 text-sky-600 focus:ring-sky-300"
           />
-          <span class="font-medium text-slate-800">{{ status.name }}</span>
+          <span class="font-medium text-slate-800 dark:text-slate-200">{{ status.name }}</span>
         </div>
-        <span class="font-mono text-slate-600">{{ status.value }}</span>
+        <span class="font-mono text-slate-600 dark:text-slate-300">{{ status.value }}</span>
       </label>
     </div>
-    <p v-else class="text-xs text-slate-500">
+    <p v-else class="text-xs text-slate-500 dark:text-slate-400">
       Parse a valid dictionary to enable checkbox selection.
     </p>
   </section>
