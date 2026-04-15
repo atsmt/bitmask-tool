@@ -1,5 +1,2 @@
 User-agent: *
 Allow: /
-
-# Replace with your actual production URL when available.
-# Sitemap: https://your-domain.example/sitemap.xml
