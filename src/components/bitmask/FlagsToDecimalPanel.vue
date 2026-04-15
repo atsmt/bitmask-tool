@@ -30,16 +30,16 @@ const selectedNames = computed({
     </header>
 
     <div
-      class="mb-3 grid grid-cols-2 gap-2 rounded-xl border border-sky-200 bg-sky-50 px-3 py-2.5 text-sky-900 dark:border-sky-800 dark:bg-sky-950/50 dark:text-sky-100"
+      class="mb-3 grid grid-cols-2 gap-2 rounded-xl border border-slate-300 bg-slate-100 px-3 py-2.5 text-slate-900 dark:border-slate-700 dark:bg-slate-800/60 dark:text-slate-100"
       role="status"
       aria-live="polite"
     >
       <div>
-        <p class="text-[11px] font-medium uppercase tracking-wide text-sky-600 dark:text-sky-300">Decimal</p>
+        <p class="text-[11px] font-medium uppercase tracking-wide text-slate-600 dark:text-slate-400">Decimal</p>
         <p class="mt-0.5 font-mono text-lg font-semibold">{{ defineFlagsProps.calculatedDecimal }}</p>
       </div>
       <div>
-        <p class="text-[11px] font-medium uppercase tracking-wide text-sky-600 dark:text-sky-300">Binary</p>
+        <p class="text-[11px] font-medium uppercase tracking-wide text-slate-600 dark:text-slate-400">Binary</p>
         <p class="mt-0.5 truncate font-mono text-lg font-semibold">{{ defineFlagsProps.calculatedBinary }}</p>
       </div>
     </div>
@@ -48,14 +48,14 @@ const selectedNames = computed({
       <label
         v-for="status in defineFlagsProps.statuses"
         :key="status.name"
-        class="flex cursor-pointer items-center justify-between rounded-lg border border-slate-200 bg-slate-50 px-2.5 py-1.5 text-xs transition hover:border-sky-300 hover:bg-sky-50 dark:border-slate-700 dark:bg-slate-900 dark:hover:border-sky-600 dark:hover:bg-slate-800"
+        class="flex cursor-pointer items-center justify-between rounded-lg border border-slate-200 bg-slate-50 px-2.5 py-1.5 text-xs transition hover:border-slate-300 hover:bg-slate-100 dark:border-slate-700 dark:bg-slate-900 dark:hover:border-slate-500 dark:hover:bg-slate-800"
       >
         <div class="flex items-center gap-2">
           <input
             v-model="selectedNames"
             type="checkbox"
             :value="status.name"
-            class="h-4 w-4 rounded border-slate-400 text-sky-600 focus:ring-sky-300"
+            class="h-4 w-4 rounded border-slate-400 text-sky-600 focus:ring-sky-300 dark:border-slate-500 dark:text-slate-200 dark:focus:ring-slate-600"
           />
           <span class="font-medium text-slate-800 dark:text-slate-200">{{ status.name }}</span>
         </div>

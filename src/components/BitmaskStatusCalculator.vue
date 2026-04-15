@@ -110,11 +110,11 @@ const isDarkMode = computed(() => themeMode.value === "dark");
 </script>
 
 <template>
-  <div class="min-h-screen bg-[radial-gradient(circle_at_20%_20%,rgba(14,165,233,0.12),transparent_45%),radial-gradient(circle_at_80%_0%,rgba(15,23,42,0.08),transparent_35%),linear-gradient(180deg,#f8fafc_0%,#eef2ff_100%)] text-slate-950 transition-colors dark:bg-[radial-gradient(circle_at_20%_20%,rgba(56,189,248,0.16),transparent_45%),radial-gradient(circle_at_80%_0%,rgba(148,163,184,0.1),transparent_35%),linear-gradient(180deg,#020617_0%,#0f172a_100%)] dark:text-slate-100">
+  <div class="min-h-screen bg-[radial-gradient(circle_at_20%_20%,rgba(14,165,233,0.12),transparent_45%),radial-gradient(circle_at_80%_0%,rgba(15,23,42,0.08),transparent_35%),linear-gradient(180deg,#f8fafc_0%,#eef2ff_100%)] text-slate-950 transition-colors dark:bg-[radial-gradient(circle_at_18%_16%,rgba(148,163,184,0.12),transparent_42%),radial-gradient(circle_at_85%_4%,rgba(71,85,105,0.16),transparent_36%),linear-gradient(180deg,#05070a_0%,#11161d_100%)] dark:text-slate-100">
     <main class="mx-auto max-w-6xl px-4 py-6 sm:px-6 lg:px-8">
       <header class="mb-5 flex items-start justify-between gap-4">
         <div>
-          <p class="text-xs font-semibold uppercase tracking-[0.26em] text-sky-600 dark:text-sky-300">
+          <p class="text-xs font-semibold uppercase tracking-[0.26em] text-sky-600 dark:text-slate-300">
             For Developers
           </p>
           <h1 class="mt-1.5 text-2xl font-semibold tracking-tight text-slate-900 dark:text-slate-100 sm:text-3xl">
@@ -127,10 +127,36 @@ const isDarkMode = computed(() => themeMode.value === "dark");
 
         <button
           type="button"
-          class="rounded-lg border border-slate-300 bg-white px-3 py-1.5 text-xs font-medium text-slate-700 shadow-sm transition hover:border-sky-400 hover:text-sky-700 focus:outline-none focus:ring-2 focus:ring-sky-300 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-200 dark:hover:border-sky-500 dark:hover:text-sky-300"
+          class="inline-flex h-8 w-8 items-center justify-center rounded-lg border border-slate-300 bg-white text-slate-700 shadow-sm transition hover:border-sky-400 hover:text-sky-700 focus:outline-none focus:ring-2 focus:ring-sky-300 dark:border-slate-600 dark:bg-slate-900 dark:text-slate-200 dark:hover:border-slate-500 dark:hover:text-slate-100 dark:focus:ring-slate-600 cursor-pointer"
+          :aria-label="isDarkMode ? 'Switch to light mode' : 'Switch to dark mode'"
+          :title="isDarkMode ? 'Switch to light mode' : 'Switch to dark mode'"
           @click="toggleTheme"
         >
-          {{ isDarkMode ? "Light mode" : "Dark mode" }}
+          <svg
+            v-if="isDarkMode"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.8"
+            class="h-4 w-4"
+            aria-hidden="true"
+          >
+            <circle cx="12" cy="12" r="4" />
+            <path d="M12 2v2.2M12 19.8V22M4.9 4.9l1.6 1.6M17.5 17.5l1.6 1.6M2 12h2.2M19.8 12H22M4.9 19.1l1.6-1.6M17.5 6.5l1.6-1.6" />
+          </svg>
+          <svg
+            v-else
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.8"
+            class="h-4 w-4"
+            aria-hidden="true"
+          >
+            <path d="M21 13.2A9 9 0 1 1 10.8 3a7.2 7.2 0 0 0 10.2 10.2Z" />
+          </svg>
         </button>
       </header>
 

@@ -57,7 +57,7 @@ function flagIsActive(flagValue: number): boolean {
       type="text"
       inputmode="numeric"
       :value="rawBitmaskInput"
-      class="w-full rounded-xl border border-slate-300 bg-white px-2.5 py-1.5 font-mono text-sm text-slate-900 outline-none transition focus:border-sky-400 focus:ring-2 focus:ring-sky-100 dark:border-slate-600 dark:bg-slate-950 dark:text-slate-100 dark:focus:border-sky-500 dark:focus:ring-sky-900/50"
+      class="w-full rounded-xl border border-slate-300 bg-white px-2.5 py-1.5 font-mono text-sm text-slate-900 outline-none transition focus:border-sky-400 focus:ring-2 focus:ring-sky-100 dark:border-slate-600 dark:bg-slate-950 dark:text-slate-100 dark:focus:border-slate-500 dark:focus:ring-slate-700"
       placeholder="10, 0b1010, or 1010"
       @input="onInput"
     />
