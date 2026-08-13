@@ -1,6 +1,6 @@
 # Bitmask Status Calculator
 
-A single-page developer utility for two-way bitmask conversions.
+A single-page developer utility for two-way bitmask conversions. Available for free at https://bitmasktool.nopants.workers.dev/
 
 Built with Astro + Vue 3 + Tailwind CSS and deployed as static output (SSG).
 
